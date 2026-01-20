@@ -28,6 +28,7 @@ baseline_year = 2015
 baseline_irrigation_area_file = original_future_irrigation_area_file
 baseline_irrigation_area = vos.netcdf2PCRobjClone(ncFile = baseline_irrigation_area_file,\
                                                   varName = "automatic", dateInput = str(baseline_year)+"-01-01", useDoy = None, cloneMapFileName  = clone_map, LatitudeLongitude = True, specificFillValue = None)
+pcr.aguila(baseline_irrigation_area)
 
 # basin scale maximum irrigation area (hectar) 
 basin_maximum_irr_area = pcr.areatotal(baseline_irrigation_area, basin_map) * (1. + basin_maximum_percent_change/100.)
