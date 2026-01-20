@@ -2,6 +2,8 @@
 import pcraster as pcr
 import virtualOS as vos
 
+import write_nc
+
 # clone map at 30sec resolution
 clone_map = "/projects/0/dfguu/users/edwin/data/pcrglobwb_input_arise/develop/europe_30sec/cloneMaps/clonemaps_europe_countries/rhinemeuse/rhinemeuse_30sec.map"
 pcr.setclone(clone_map)
@@ -9,9 +11,40 @@ pcr.setclone(clone_map)
 # use directly the bounding box as the 'basin' map (area of interest) 
 basin_map = pcr.spatial(pcr.nominal(1.0))
 
-# percentange increse change
+# basin scale increase/change in percentages (0.0-100.0%) - PLEASE CHANGE THESE!
 basin_annual_percent_change = 2.0
 basin_maximum_percent_change = 40.
+
+# estimated/original pixel scale future irrigation area (based on PCR-GLOBWB aqueduct input files) - PLEASE CHANGE THIS!
+# ~ original_future_irrigation_area_file = "/home/jsteyaert1/rhine_30sec/ssp5_2015_2100/irrigated_area_30sec_hectar_meier_g_aei_ssp5_2015_2100_v20250310.nc"
+original_future_irrigation_area_file = "/scratch-shared/edwin/irrigation_downscaling/rhine_30sec/ssp5_2015_2100/irrigated_area_30sec_hectar_meier_g_aei_ssp5_2015_2100_v20250310.nc"
+
+# output directory and file name - PLEASE CHANGE THIS- 
+out_directory = "/scratch-shared/edwin/test_irr_area_jen/"
+out_file_name = "ssp5_irr_area_30sec_2015-2100.nc"
+out_file_name = out_directory + "/" + out_file_name
+
+# create output directory
+if os.path.exists(out_directory): shutil.rmtree(out_directory)
+os.makedirs(out_directory)
+# - moving to the output directory
+os.chdir(out_directory)
+
+# attribute for netCDF files 
+attributeDictionary = {}
+attributeDictionary['title'      ]  = "Irrigation areas - 30sec"
+attributeDictionary['institution']  = "Dept. of Physical Geography, Utrecht University"
+attributeDictionary['source'     ]  = "None"
+attributeDictionary['history'    ]  = "None"
+attributeDictionary['references' ]  = "None"
+attributeDictionary['comment'    ]  = "None"
+# additional attribute defined in PCR-GLOBWB 
+attributeDictionary['description']  = "Created by Jennie Steyaert and Edwin H. Sutanudjaja, see https://github.com/edwinkost/irrigation_extrapolation/blob/main/scripts/irr_extrapolate.py"
+
+# initiate the netcd object: 
+nc_file = write_nc.WriteNC(cloneMapFile = clone_map, nc_attributes = attributeDictionary, nc_format = 'NETCDF4')
+# - netcdf output variable name, file name, and unit
+nc_file.createNetCDF(out_file_name, "irrigationArea", "hectar")
 
 # cell area
 cell_area_in_m2_file = "/projects/0/dfguu/users/edwin/data/pcrglobwb_input_arise/develop/global_30sec/routing/cell_area/cdo_grid_area_30sec_map_correct_lat.nc"
@@ -19,16 +52,12 @@ cell_area_in_m2_file = "/projects/0/dfguu/users/edwin/data/pcrglobwb_input_arise
 cell_area  = (1./(100.*100.)) * vos.netcdf2PCRobjCloneWithoutTime(ncFile  = cell_area_in_m2_file,\
                                                                   varName = "automatic", cloneMapFileName = clone_map, LatitudeLongitude = True, specificFillValue = None, absolutePath = None)
 
-# original future irrigation area (based on PCR-GLOBWB aqueduct input files)
-# ~ original_future_irrigation_area_file = "/home/jsteyaert1/rhine_30sec/ssp5_2015_2100/irrigated_area_30sec_hectar_meier_g_aei_ssp5_2015_2100_v20250310.nc"
-original_future_irrigation_area_file = "/scratch-shared/edwin/irrigation_downscaling/rhine_30sec/ssp5_2015_2100/irrigated_area_30sec_hectar_meier_g_aei_ssp5_2015_2100_v20250310.nc"
-
 # baseline irrigation area (hectar)
 baseline_year = 2015
 baseline_irrigation_area_file = original_future_irrigation_area_file
 baseline_irrigation_area = vos.netcdf2PCRobjClone(ncFile = baseline_irrigation_area_file,\
                                                   varName = "automatic", dateInput = str(baseline_year)+"-01-01", useDoy = None, cloneMapFileName  = clone_map, LatitudeLongitude = True, specificFillValue = None)
-pcr.aguila(baseline_irrigation_area)
+# ~ pcr.aguila(baseline_irrigation_area)
 
 # basin scale maximum irrigation area (hectar) 
 basin_maximum_irr_area = pcr.areatotal(baseline_irrigation_area, basin_map) * (1. + basin_maximum_percent_change/100.)
@@ -102,7 +131,18 @@ for year in range(2016, 2100+1, 1):
     print("\n")
     print("\n")
     
-    if year == 2016: pcr.aguila(final_current_year_irr_area)
-    if year == 2030: pcr.aguila(final_current_year_irr_area)
-    if year == 2050: pcr.aguila(final_current_year_irr_area)
-    if year == 2100: pcr.aguila(final_current_year_irr_area)
+    # ~ if year == 2016: pcr.aguila(final_current_year_irr_area)
+    # ~ if year == 2030: pcr.aguila(final_current_year_irr_area)
+    # ~ if year == 2050: pcr.aguila(final_current_year_irr_area)
+    # ~ if year == 2100: pcr.aguila(final_current_year_irr_area)
+
+    # write values to a netcdf file
+    timeStamp = datetime.datetime(int(year), int(1), int(1), int(0))
+    varField = pcr.pcr2numpy(final_current_year_irr_area, vos.MV)
+    # index for timeseries in nc file
+    if year == 2015: index = 0
+    if year > 2015: index += 1
+    nc_file.writePCR2NetCDF(out_file_name, "irrigationArea", varField, timeStamp, posCnt = index)
+    
+    # update index for the next time step
+    index = index + 1
