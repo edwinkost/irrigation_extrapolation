@@ -7,7 +7,7 @@ clone_map = "/projects/0/dfguu/users/edwin/data/pcrglobwb_input_arise/develop/eu
 pcr.setclone(clone_map)
 
 # use directly the bounding box as the 'basin' map (area of interest) 
-basin_map = pcr.nominal(1.0)
+basin_map = pcr.spatial(pcr.nominal(1.0))
 
 # percentange increse change
 basin_annual_percent_change = 2.0
