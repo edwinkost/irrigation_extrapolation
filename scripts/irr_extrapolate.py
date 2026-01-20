@@ -27,7 +27,7 @@ original_future_irrigation_area_file = "/scratch-shared/edwin/irrigation_downsca
 baseline_year = 2015
 baseline_irrigation_area_file = original_future_irrigation_area_file
 baseline_irrigation_area = vos.netcdf2PCRobjClone(ncFile = baseline_irrigation_area_file,\
-                                                  varName = "automatic", dateInput = str(baseline_year)+"01-01", useDoy = None, cloneMapFileName  = clone_map, LatitudeLongitude = True, specificFillValue = None)
+                                                  varName = "automatic", dateInput = str(baseline_year)+"-01-01", useDoy = None, cloneMapFileName  = clone_map, LatitudeLongitude = True, specificFillValue = None)
 
 # basin scale maximum irrigation area (hectar) 
 basin_maximum_irr_area = pcr.areatotal(baseline_irrigation_area, basin_map) * (1. + basin_maximum_percent_change/100.)
@@ -55,9 +55,9 @@ for year in range(2016, 2100, 1):
     
     # get the pixel scale estimate of increase based on the original future irrigation area (based on PCR-GLOBWB aqueduct input files)
     prev_year_estimate     = vos.netcdf2PCRobjClone(ncFile = original_future_irrigation_area_file,\
-                                                    varName = "automatic", dateInput = str(year-1)+"01-01", useDoy = None, cloneMapFileName = clone_map, LatitudeLongitude = True, specificFillValue = None) 
+                                                    varName = "automatic", dateInput = str(year-1)+"-01-01", useDoy = None, cloneMapFileName = clone_map, LatitudeLongitude = True, specificFillValue = None) 
     current_year_estimate  = vos.netcdf2PCRobjClone(ncFile = original_future_irrigation_area_file,\
-                                                    varName = "automatic", dateInput = str(year)+"01-01", useDoy = None, cloneMapFileName = clone_map, LatitudeLongitude = True, specificFillValue = None)
+                                                    varName = "automatic", dateInput = str(year)+"-01-01", useDoy = None, cloneMapFileName = clone_map, LatitudeLongitude = True, specificFillValue = None)
     # - pixel scale estimate of increase (hectar), ignore any decrease
     delta_increase_estimate = pcr.max(0.0, current_year_estimate - prev_year_estimate)
 
