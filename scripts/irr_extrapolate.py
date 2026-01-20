@@ -144,8 +144,8 @@ for year in range(2016, 2100+1, 1):
     timeStamp = datetime.datetime(int(year), int(1), int(1), int(0))
     varField = pcr.pcr2numpy(final_current_year_irr_area, vos.MV)
     # index for timeseries in nc file
-    if year == 2015: index = 0
-    if year > 2015: index += 1
+    if year == 2016: index = 0
+    if year > 2016: index += 1
     nc_file.writePCR2NetCDF(out_file_name, "irrigationArea", varField, timeStamp, posCnt = index)
     
     # update index for the next time step
