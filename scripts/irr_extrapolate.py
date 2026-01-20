@@ -1,10 +1,11 @@
 
 import os
 import shutil
+import datetime
 
 import pcraster as pcr
-import virtualOS as vos
 
+import virtualOS as vos
 import write_nc
 
 # clone map at 30sec resolution
