@@ -75,7 +75,7 @@ for year in range(2016, 2100, 1):
     while surplus_area > 0:
 
         # - limit the increase based on the cell area
-        delta_increase = pcr.min(delta_increase, cell_area – basin_previous_year_irr_area)
+        delta_increase = pcr.min(delta_increase, cell_area - previous_year_irr_area)
         
         basin_delta_increase = pcr.areatotal(delta_increase, basin_map)
         delta_increase = (delta_increase / basin_delta_increase) * (basin_increase_in_percent/100.) * basin_previous_year_irr_area
