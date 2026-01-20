@@ -20,7 +20,7 @@ class WriteNC():
 
         # netCDF format and attributes:
         self.format = nc_format
-        self.attributeDictionary = nc_attribute
+        self.attributeDictionary = nc_attributes
 
     def createNetCDF(self, ncFileName, varName,varUnit):
 
