@@ -1,4 +1,7 @@
 
+import os
+import shutil
+
 import pcraster as pcr
 import virtualOS as vos
 
