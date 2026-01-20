@@ -66,6 +66,7 @@ for year in range(2016, 2100, 1):
     # - correct/distribute the increase (hectare) in order to get the expected basin_irr_area_increase  
     basin_delta_increase = pcr.areatotal(delta_increase, basin_map)
     delta_increase = (delta_increase / basin_delta_increase) * (basin_increase_in_percent/100.) * basin_previous_year_irr_area
+    delta_increase = pcr.cover(delta_increase, 0.0)
 
     # estimate the current irrigation area (hectare)
     estimate_current_year_irr_area =  previous_year_irr_area + delta_increase
@@ -80,7 +81,8 @@ for year in range(2016, 2100, 1):
         
         basin_delta_increase = pcr.areatotal(delta_increase, basin_map)
         delta_increase = (delta_increase / basin_delta_increase) * (basin_increase_in_percent/100.) * basin_previous_year_irr_area
-        
+        delta_increase = pcr.cover(delta_increase, 0.0)
+            
         estimate_current_year_irr_area = previous_year_irr_area + delta_increase
         surplus_area, valid = pcr.cellvalue(pcr.mapmaximum(estimate_current_year_irr_area - cell_area), 1)
         
