@@ -17,7 +17,7 @@ basin_maximum_percent_change = 40.
 cell_area_in_m2_file = "/projects/0/dfguu/users/edwin/data/pcrglobwb_input_arise/develop/global_30sec/routing/cell_area/cdo_grid_area_30sec_map_correct_lat.nc"
 # - cell area in hectar
 cell_area  = (1./(100.*100.)) * vos.netcdf2PCRobjCloneWithoutTime(ncFile  = cell_area_in_m2_file,\
-                                                                  varName = "automatic", cloneMapFileName = clone_map, LatitudeLongitude = True, specificFillValue = None, absolutePath = None), 0.0)
+                                                                  varName = "automatic", cloneMapFileName = clone_map, LatitudeLongitude = True, specificFillValue = None, absolutePath = None)
 
 # original future irrigation area (based on PCR-GLOBWB aqueduct input files)
 original_future_irrigation_area_file = "/home/jsteyaert1/rhine_30sec/ssp5_2015_2100/irrigated_area_30sec_hectar_meier_g_aei_ssp5_2015_2100_v20250310.nc"
