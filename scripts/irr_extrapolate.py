@@ -1,5 +1,5 @@
 
-import pcraster as prc
+import pcraster as pcr
 import virtualOS as vos
 
 # clone map at 30sec resolution
