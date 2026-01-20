@@ -3,6 +3,8 @@ import netCDF4 as nc
 import numpy as np
 import pcraster as pcr
 
+import virtualOS as vos
+
 class WriteNC():
     
     def __init__(self, cloneMapFile, nc_attributes, nc_format):
