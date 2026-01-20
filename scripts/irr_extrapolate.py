@@ -146,7 +146,4 @@ for year in range(2016, 2100+1, 1):
     # index for timeseries in nc file
     if year == 2016: index = 0
     if year > 2016: index += 1
-    nc_file.writePCR2NetCDF(out_file_name, "irrigationArea", varField, timeStamp, posCnt = index)
-    
-    # update index for the next time step
-    index = index + 1
+    nc_file.writePCR2NetCDF(out_file_name, "irrigationArea", varField, timeStamp, posCnt = index)    
