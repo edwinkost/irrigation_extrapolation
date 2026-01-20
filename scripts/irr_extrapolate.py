@@ -32,7 +32,7 @@ baseline_irrigation_area = vos.netcdf2PCRobjClone(ncFile = baseline_irrigation_a
 # basin scale maximum irrigation area (hectar) 
 basin_maximum_irr_area = pcr.areatotal(baseline_irrigation_area, basin_map) * (1. + basin_maximum_percent_change/100.)
 
-for year in range(2016, 2100, 1):
+for year in range(2016, 2100+1, 1):
     
     # calculate all (or most) of the following steps in hectare
     
@@ -98,6 +98,8 @@ for year in range(2016, 2100, 1):
     print("\n")
     print(year)
     print(float(check_basin_increase_in_percent))
+    print("\n")
+    print("\n")
     
     if year == 2016: pcr.aguila(final_current_year_irr_area)
     if year == 2030: pcr.aguila(final_current_year_irr_area)
