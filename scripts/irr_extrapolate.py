@@ -20,7 +20,8 @@ cell_area  = (1./(100.*100.)) * vos.netcdf2PCRobjCloneWithoutTime(ncFile  = cell
                                                                   varName = "automatic", cloneMapFileName = clone_map, LatitudeLongitude = True, specificFillValue = None, absolutePath = None)
 
 # original future irrigation area (based on PCR-GLOBWB aqueduct input files)
-original_future_irrigation_area_file = "/home/jsteyaert1/rhine_30sec/ssp5_2015_2100/irrigated_area_30sec_hectar_meier_g_aei_ssp5_2015_2100_v20250310.nc"
+# ~ original_future_irrigation_area_file = "/home/jsteyaert1/rhine_30sec/ssp5_2015_2100/irrigated_area_30sec_hectar_meier_g_aei_ssp5_2015_2100_v20250310.nc"
+original_future_irrigation_area_file = "/scratch-shared/edwin/irrigation_downscaling/rhine_30sec/ssp5_2015_2100/irrigated_area_30sec_hectar_meier_g_aei_ssp5_2015_2100_v20250310.nc"
 
 # baseline irrigation area (hectar)
 baseline_year = 2015
