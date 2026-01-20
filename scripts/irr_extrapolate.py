@@ -92,4 +92,5 @@ for year in range(2016, 2100, 1):
     basin_final_current_year_irr_area = pcr.areatotal(final_current_year_irr_area, basin_map)
     check_basin_increase_in_percent, valid = pcr.cellvalue(pcr.mapmaximum((basin_final_current_year_irr_area - basin_previous_year_irr_area) / basin_previous_year_irr_area) * 100., 1)
     
+    print(year)
     print(float(check_basin_increase_in_percent))
