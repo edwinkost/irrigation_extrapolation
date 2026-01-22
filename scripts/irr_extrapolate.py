@@ -125,8 +125,8 @@ for year in range(2015, 2100+1, 1):
             
             print(float(surplus_area))
             
-            piet
-        
+            
+        piet
         final_current_year_irr_area = estimate_current_year_irr_area
         
         # check 
