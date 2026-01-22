@@ -111,7 +111,7 @@ for year in range(2015, 2100+1, 1):
         # constrained by cell area
         surplus_area, valid = pcr.cellvalue(pcr.mapmaximum(estimate_current_year_irr_area - cell_area), 1)
         print(float(surplus_area))
-        while surplus_area > 0:
+        while surplus_area > 5e-06:
         
             # - limit the increase based on the cell area
             delta_increase = pcr.min(delta_increase, cell_area - previous_year_irr_area)
