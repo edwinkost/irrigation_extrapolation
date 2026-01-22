@@ -124,6 +124,8 @@ for year in range(2015, 2100+1, 1):
             surplus_area, valid = pcr.cellvalue(pcr.mapmaximum(estimate_current_year_irr_area - cell_area), 1)
             
             print(float(surplus_area))
+            
+            piet
         
         final_current_year_irr_area = estimate_current_year_irr_area
         
